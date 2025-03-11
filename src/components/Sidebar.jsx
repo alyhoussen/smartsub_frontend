@@ -27,30 +27,32 @@ const Sidebar = () => {
         <MdMenu size={24} />
       </button>
 
-      {/* Overlay pour mobile */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black opacity-50 z-40 md:hidden"
-          onClick={() => setIsOpen(false)}
-        ></div>
-      )}
+      {/* Overlay avec effet de flou (visible quand isOpen est true) */}
+      <div
+        className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${
+          isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        } md:hidden`}
+        onClick={() => setIsOpen(false)}
+      ></div>
 
-      {/* Sidebar */}
-      <aside className={`fixed top-0 left-0 h-screen bg-gray-900 text-white flex flex-col w-64 transform ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:relative transition-transform duration-300 z-50`}>
-        
+      {/* Sidebar avec animation améliorée */}
+      <aside
+        className={`fixed top-0 left-0 h-screen bg-gray-900 text-white flex flex-col w-64 shadow-lg
+          transition-all duration-300 ease-in-out z-50 transform ${
+            isOpen ? "translate-x-0 scale-100 opacity-100" : "-translate-x-full scale-90 opacity-0"
+          } md:translate-x-0 md:opacity-100 md:scale-100 md:relative`}
+      >
         {/* Logo + Bouton de fermeture sur mobile */}
         <div className="p-4 flex items-center justify-between bg-yellow-500 border-b border-gray-700">
           <span className="text-2xl font-bold tracking-wide">
             SMART<span className="text-gray-700">SUB</span>
           </span>
-
-          {/* Bouton de fermeture sur mobile */}
           <button className="md:hidden text-gray-900" onClick={() => setIsOpen(false)}>
             <MdClose size={24} />
           </button>
         </div>
 
-        {/* Navigation (flex-1 pour occuper l'espace disponible) */}
+        {/* Navigation */}
         <nav className="flex-1 mt-4">
           <ul>
             {sidebarItems.map((item) => (
@@ -65,7 +67,7 @@ const Sidebar = () => {
           </ul>
         </nav>
 
-        {/* Déconnexion (mt-auto pour le placer en bas) */}
+        {/* Déconnexion */}
         <div className="p-4 border-t border-gray-700 mt-auto">
           <NavLink
             to="/logout"
@@ -80,17 +82,18 @@ const Sidebar = () => {
   );
 };
 
-// Composant SidebarItem
+// Composant SidebarItem avec amélioration de l’état actif
 const SidebarItem = ({ to, icon, label, isActive }) => (
   <li>
     <NavLink
       to={to}
-      className={`flex items-center mx-5 p-3 rounded-lg transition ${
-        isActive ? "bg-gray-700 text-yellow-400" : "hover:bg-gray-700"
+      className={`flex items-center mx-5 p-3 rounded-lg transition relative group ${
+        isActive ? "bg-gray-700 text-yellow-400 border-l-4 border-yellow-400" : "hover:bg-gray-700"
       }`}
     >
       {icon}
       <span className="ml-3">{label}</span>
+      {isActive && <div className="absolute left-0 w-1 h-full bg-yellow-400"></div>}
     </NavLink>
   </li>
 );

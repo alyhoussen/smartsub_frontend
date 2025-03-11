@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { MdMoreVert, MdCheckCircle, MdCancel, MdEdit, MdAttachMoney } from "react-icons/md";
+import React, { useState, useEffect, useRef } from "react";
+import { MdMoreVert, MdCheckCircle, MdCancel, MdEdit } from "react-icons/md";
 
 const AbonnementCard = ({
   name,
@@ -11,9 +11,38 @@ const AbonnementCard = ({
   onCancel,
 }) => {
   const [isActionOpen, setIsActionOpen] = useState(false);
+  const actionMenuRef = useRef(null); // Référence pour le menu déroulant
+  const cardRef = useRef(null); // Référence pour la carte, utilisée pour les clics en dehors
+
+  // Fermer le menu si l'utilisateur clique en dehors
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        actionMenuRef.current && !actionMenuRef.current.contains(event.target) &&
+        cardRef.current && !cardRef.current.contains(event.target)
+      ) {
+        setIsActionOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleActionClick = (action) => {
+    if (action === "modify") {
+      onModify();
+    } else if (action === "cancel") {
+      onCancel();
+    }
+    setIsActionOpen(false); // Fermer le menu après avoir cliqué sur une action
+  };
 
   return (
-    <div className="relative bg-white shadow-lg rounded-lg p-4 flex flex-col justify-between h-full">
+    <div
+      ref={cardRef}
+      className="relative bg-white shadow-lg rounded-lg p-4 flex flex-col justify-between h-full"
+    >
       {/* Logo et titre */}
       <div className="flex items-center mb-4">
         <img src={logo} alt={name} className="w-12 h-12 object-contain mr-3" />
@@ -52,15 +81,18 @@ const AbonnementCard = ({
 
           {/* Menu d'actions supplémentaires */}
           {isActionOpen && (
-            <div className="absolute right-0 top-full mt-2 w-48 bg-white shadow-lg rounded-lg py-2 text-gray-700 z-20">
+            <div
+              ref={actionMenuRef}
+              className="absolute right-0 top-full mt-2 w-48 bg-white shadow-lg rounded-lg py-2 text-gray-700 z-20"
+            >
               <button
-                onClick={() => onModify()}
+                onClick={() => handleActionClick("modify")}
                 className="flex items-center px-4 py-2 hover:bg-gray-100 w-full"
               >
                 <MdEdit className="mr-2" /> Modifier
               </button>
               <button
-                onClick={() => onCancel()}
+                onClick={() => handleActionClick("cancel")}
                 className="flex items-center px-4 py-2 hover:bg-gray-100 w-full text-red-500"
               >
                 <MdCancel className="mr-2" /> Annuler
