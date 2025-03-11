@@ -1,22 +1,51 @@
-import React, { useState } from "react";
+import React from "react";
 import AbonnementCard from "./AbonnementCard";
-import abonnementsMock from "../data/abonnementsMock";
+
+const abonnements = [
+  {
+    id: 1,
+    name: "Netflix",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/6/69/Netflix_logo.svg",
+    price: 17.99,
+    status: "Actif"
+  },
+  {
+    id: 2,
+    name: "Spotify",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg",
+    price: 9.99,
+    status: "Suspendu"
+  },
+  // Ajoute d'autres abonnements si besoin...
+];
 
 const AbonnementList = () => {
-  const [abonnements, setAbonnements] = useState(abonnementsMock);
-
-  const handleDelete = (id) => {
-    setAbonnements(abonnements.filter(a => a.id !== id));
+  // Pour la démo, on simule les actions via console.log
+  const handleSuspend = (name) => {
+    console.log("Suspend/Réactiver", name);
   };
 
-  const handleEdit = (abonnement) => {
-    alert("Modifier : " + abonnement.nom);
+  const handleModify = (name) => {
+    console.log("Modifier", name);
+  };
+
+  const handleCancel = (name) => {
+    console.log("Annuler", name);
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {abonnements.map(a => (
-        <AbonnementCard key={a.id} abonnement={a} onDelete={handleDelete} onEdit={handleEdit} />
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      {abonnements.map((abonnement) => (
+        <AbonnementCard
+          key={abonnement.id}
+          name={abonnement.name}
+          logo={abonnement.logo}
+          price={abonnement.price}
+          status={abonnement.status}
+          onSuspend={() => handleSuspend(abonnement.name)}
+          onModify={() => handleModify(abonnement.name)}
+          onCancel={() => handleCancel(abonnement.name)}
+        />
       ))}
     </div>
   );
