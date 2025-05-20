@@ -1,14 +1,28 @@
 import React, { useState } from 'react';
 import { FaUserAlt, FaLock } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate()
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Email:', email, 'Mot de passe:', password);
+    const response = await fetch("http://localhost:8080/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({email: email, password: password}),
+      credentials: "include",
+    });
+    if (response.ok) {
+      alert("Connexion réussie !");
+      navigate("/");
+    } else {
+      alert("Erreur de connexion !");
+    }
   };
+
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -27,7 +41,7 @@ const Login = () => {
                 className="w-full p-3 pl-10 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
                 placeholder="Entrez votre email"
               />
-              <FaUserAlt className="absolute left-3 top-3 text-gray-500" />
+              <FaUserAlt className="absolute left-3 top-4 text-gray-500" />
             </div>
           </div>
           <div className="mb-6">
@@ -42,7 +56,7 @@ const Login = () => {
                 className="w-full p-3 pl-10 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
                 placeholder="Entrez votre mot de passe"
               />
-              <FaLock className="absolute left-3 top-3 text-gray-500" />
+              <FaLock className="absolute left-3 top-4 text-gray-500" />
             </div>
           </div>
           <button

@@ -1,16 +1,29 @@
 import React, { useState } from 'react';
 import { FaUserAlt, FaEnvelope, FaLock } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Nom:', name, 'Email:', email, 'Mot de passe:', password);
+    const response = await fetch("http://localhost:8080/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: name, email: email, password: password }),
+    });
+    if (response.ok) {
+      alert("Inscription réussie !");
+      navigate("/");
+    } else {
+      alert("Erreur d'inscription !");
+    }
   };
 
+  
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
@@ -28,7 +41,7 @@ const Register = () => {
                 className="w-full p-3 pl-10 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
                 placeholder="Entrez votre nom"
               />
-              <FaUserAlt className="absolute left-3 top-3 text-gray-500" />
+              <FaUserAlt className="absolute left-3 top-4 text-gray-500" />
             </div>
           </div>
           <div className="mb-6">
@@ -43,7 +56,7 @@ const Register = () => {
                 className="w-full p-3 pl-10 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
                 placeholder="Entrez votre email"
               />
-              <FaEnvelope className="absolute left-3 top-3 text-gray-500" />
+              <FaEnvelope className="absolute left-3 top-4 text-gray-500" />
             </div>
           </div>
           <div className="mb-6">
@@ -58,7 +71,7 @@ const Register = () => {
                 className="w-full p-3 pl-10 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
                 placeholder="Entrez votre mot de passe"
               />
-              <FaLock className="absolute left-3 top-3 text-gray-500" />
+              <FaLock className="absolute left-3 top-4 text-gray-500" />
             </div>
           </div>
           <button

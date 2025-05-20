@@ -29,7 +29,7 @@ const Sidebar = () => {
 
       {/* Overlay avec effet de flou (visible quand isOpen est true) */}
       <div
-        className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 transition-opacity duration-300 ${
           isOpen ? "opacity-100 visible" : "opacity-0 invisible"
         } md:hidden`}
         onClick={() => setIsOpen(false)}
@@ -40,7 +40,7 @@ const Sidebar = () => {
         className={`fixed top-0 left-0 h-screen bg-gray-900 text-white flex flex-col w-64 shadow-lg
           transition-all duration-300 ease-in-out z-50 transform ${
             isOpen ? "translate-x-0 scale-100 opacity-100" : "-translate-x-full scale-90 opacity-0"
-          } md:translate-x-0 md:opacity-100 md:scale-100 md:relative`}
+          } md:translate-x-0 md:opacity-100 md:scale-100 md:fixed`}
       >
         {/* Logo + Bouton de fermeture sur mobile */}
         <div className="p-4 flex items-center justify-between bg-yellow-500 border-b border-gray-700">
@@ -57,6 +57,7 @@ const Sidebar = () => {
           <ul>
             {sidebarItems.map((item) => (
               <SidebarItem
+                onClick={()=>{setIsOpen(false)}}
                 key={item.to}
                 to={item.to}
                 icon={item.icon}
@@ -83,9 +84,10 @@ const Sidebar = () => {
 };
 
 // Composant SidebarItem avec amélioration de l’état actif
-const SidebarItem = ({ to, icon, label, isActive }) => (
+const SidebarItem = ({ onClick, to, icon, label, isActive }) => (
   <li>
     <NavLink
+      onClick={onClick}
       to={to}
       className={`flex items-center mx-5 p-3 rounded-lg transition relative group ${
         isActive ? "bg-gray-700 text-yellow-400 border-l-4 border-yellow-400" : "hover:bg-gray-700"

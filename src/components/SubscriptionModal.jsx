@@ -27,7 +27,7 @@ const SubscriptionModal = ({ subscription, onClose, onSave }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="fixed inset-0 bg-[#00000041] flex justify-center items-center z-50">
       <div className="bg-white p-8 rounded-lg shadow-2xl w-11/12 sm:w-96 transition-all duration-300">
         <h3 className="text-2xl font-semibold mb-4 text-gray-800">
           {subscription ? "Modifier l'abonnement" : "Ajouter un abonnement"}
