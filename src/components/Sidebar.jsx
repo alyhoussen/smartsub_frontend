@@ -37,15 +37,15 @@ const Sidebar = () => {
 
       {/* Sidebar avec animation améliorée */}
       <aside
-        className={`fixed top-0 left-0 h-screen bg-gray-900 text-white flex flex-col w-64 shadow-lg
+        className={`fixed top-0 left-0 h-screen bg-white text-gray-800 flex flex-col w-64 shadow-lg
           transition-all duration-300 ease-in-out z-50 transform ${
             isOpen ? "translate-x-0 scale-100 opacity-100" : "-translate-x-full scale-90 opacity-0"
           } md:translate-x-0 md:opacity-100 md:scale-100 md:fixed`}
       >
         {/* Logo + Bouton de fermeture sur mobile */}
-        <div className="p-4 flex items-center justify-between bg-yellow-500 border-b border-gray-700">
+        <div className="p-4 flex items-center justify-between border-b border-[#eee]">
           <span className="text-2xl font-bold tracking-wide">
-            SMART<span className="text-gray-700">SUB</span>
+            SMART<span className="text-yellow-400">SUB</span>
           </span>
           <button className="md:hidden text-gray-900" onClick={() => setIsOpen(false)}>
             <MdClose size={24} />
@@ -69,10 +69,10 @@ const Sidebar = () => {
         </nav>
 
         {/* Déconnexion */}
-        <div className="p-4 border-t border-gray-700 mt-auto">
+        <div className="p-4 mt-auto">
           <NavLink
             to="/logout"
-            className="flex items-center p-3 text-red-400 hover:bg-red-600 hover:text-white rounded-lg"
+            className="flex items-center bg-gray-100 p-3 text-red-400 hover:bg-red-600 hover:text-white rounded-lg"
           >
             <MdOutlineLogout className="mr-2" />
             Déconnexion
@@ -90,7 +90,7 @@ const SidebarItem = ({ onClick, to, icon, label, isActive }) => (
       onClick={onClick}
       to={to}
       className={`flex items-center mx-5 p-3 rounded-lg transition relative group ${
-        isActive ? "bg-gray-700 text-yellow-400 border-l-4 border-yellow-400" : "hover:bg-gray-700"
+        isActive ? "text-gray-800 bg-yellow-400 border-l-4 border-yellow-400" : "hover:bg-gray-100"
       }`}
     >
       {icon}

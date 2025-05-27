@@ -15,15 +15,15 @@ function App() {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
 
-    useEffect(() => {
-      fetch("http://localhost:8080/api/auth/me", {
-        method: "GET",
-        credentials: "include",
-      })
-        .then((res) => res.json())
-        .then((data) => setUser(data))
-        .catch(() => navigate("/login"));
-    }, [navigate]);
+    // useEffect(() => {
+    //   fetch("http://localhost:8080/api/auth/me", {
+    //     method: "GET",
+    //     credentials: "include",
+    //   })
+    //     .then((res) => res.json())
+    //     .then((data) => setUser(data))
+    //     .catch(() => navigate("/login"));
+    // }, [navigate]);
 
     const handleLogout = async () => {
       await fetch("http://localhost:8080/api/auth/logout", {
