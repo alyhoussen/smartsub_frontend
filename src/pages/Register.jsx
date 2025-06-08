@@ -15,11 +15,12 @@ const Register = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: name, email: email, password: password }),
     });
-    if (response.ok) {
+    if (response.message) {
       alert("Inscription réussie !");
+      localStorage.setItem("user", JSON.stringify({email: email, password: password}));
       navigate("/");
     } else {
-      alert("Erreur d'inscription !");
+      alert(response.error);
     }
   };
 

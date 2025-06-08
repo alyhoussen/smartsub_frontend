@@ -57,9 +57,9 @@ const Navbar = ({ toggleSidebar }) => {
                 <a href="/profile" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                   Profil
                 </a>
-                <a href="/settings" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                {/* <a href="/settings" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                   Paramètres
-                </a>
+                </a> */}
                 <a href="/logout" className="block px-4 py-2 text-red-500 hover:bg-gray-100">
                   Déconnexion
                 </a>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaUserAlt, FaLock } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,6 +6,12 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(()=>{
+    if(localStorage.getItem("user")){
+      navigate("/")
+    }
+  },[])
+  
   const navigate = useNavigate()
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,14 +21,17 @@ const Login = () => {
       body: JSON.stringify({email: email, password: password}),
       credentials: "include",
     });
-    if (response.ok) {
-      alert("Connexion réussie !");
+    
+    if (response.message) {
+      alert("Connexion réussie!");
+      localStorage.setItem("user", JSON.stringify({email: email, password: password}))
       navigate("/");
-    } else {
-      alert("Erreur de connexion !");
+    } else if(response.error) {
+      alert(response.error);
+    } else{
+      alert("Erreur de connexion")
     }
   };
-
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">

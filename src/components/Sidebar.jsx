@@ -4,16 +4,17 @@ import {
   MdDashboard, MdSubscriptions, MdNotificationsActive,
   MdSettings, MdOutlineLogout, MdLightbulbOutline, MdMenu, MdClose
 } from "react-icons/md";
+import { FiBell } from "react-icons/fi";
 
 const sidebarItems = [
   { to: "/", icon: <MdDashboard />, label: "Dashboard" },
   { to: "/manage", icon: <MdSubscriptions />, label: "Abonnement" },
   { to: "/suggestions", icon: <MdLightbulbOutline />, label: "Suggestions" },
-  { to: "/notifications", icon: <MdNotificationsActive />, label: "Notifications" },
-  { to: "/settings", icon: <MdSettings />, label: "Paramètres" }
+  { to: "/notifications", icon: <FiBell />, label: "Notifications" },
+  // { to: "/settings", icon: <MdSettings />, label: "Paramètres" }
 ];
 
-const Sidebar = () => {
+const Sidebar = ({handleLogout}) => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -70,13 +71,13 @@ const Sidebar = () => {
 
         {/* Déconnexion */}
         <div className="p-4 mt-auto">
-          <NavLink
-            to="/logout"
+          <button
+            onClick={handleLogout}
             className="flex items-center bg-gray-100 p-3 text-red-400 hover:bg-red-600 hover:text-white rounded-lg"
           >
             <MdOutlineLogout className="mr-2" />
             Déconnexion
-          </NavLink>
+          </button>
         </div>
       </aside>
     </>

@@ -19,8 +19,13 @@ const ManageSubscription = () => {
     setIsModalOpen(true);
   };
 
-  const handleSaveSubscription = (newData) => {
-    if (selectedSubscription) {
+  const handleSaveSubscription = async (newData) => {
+      if (selectedSubscription) {
+        const response = await fetch("http://localhost:8080/api/subscriptions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(selectedSubscription),
+      });
       setSubscriptions((prev) =>
         prev.map((sub) => (sub.id === selectedSubscription.id ? { ...sub, ...newData } : sub))
       );

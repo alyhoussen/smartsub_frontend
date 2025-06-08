@@ -15,31 +15,25 @@ function App() {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //   fetch("http://localhost:8080/api/auth/me", {
-    //     method: "GET",
-    //     credentials: "include",
-    //   })
-    //     .then((res) => res.json())
-    //     .then((data) => setUser(data))
-    //     .catch(() => navigate("/login"));
-    // }, [navigate]);
+    useEffect(() => {
+      const user = localStorage.getItem("user")
+      if(!user){
+        navigate("/login")
+      }
+    }, [navigate]);
 
     const handleLogout = async () => {
-      await fetch("http://localhost:8080/api/auth/logout", {
-        method: "POST",
-        credentials: "include",
-      });
+      localStorage.removeItem("user")
       navigate("/login");
     };
 
     return (
       <div className="flex min-h-screen">
         {/* Sidebar fixe */}
-        <Sidebar />
+        <Sidebar handleLogout={handleLogout} />
         <div className="flex-1 flex flex-col md:ml-64">
           {/* Navbar en haut */}
-          <Navbar />
+          <Navbar handleLogout={handleLogout} />
           {/* Contenu des pages */}
           <main className="p-4 flex-1 bg-gray-100">
             {child}

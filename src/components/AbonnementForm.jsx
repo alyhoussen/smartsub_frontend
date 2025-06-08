@@ -35,7 +35,7 @@ const AbonnementForm = ({ onSubmit, initialData = {} }) => {
         <option value="suspendu">Suspendu</option>
       </select>
       <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Description" className="border p-2 w-full"></textarea>
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded w-full">Valider</button>
+      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded w-full cursor-pointer">Valider</button>
     </form>
   );
 };
